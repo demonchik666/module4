@@ -16,6 +16,22 @@ def change_contact(args, contacts):
         return "Contact changed."
     else:
         return "Contact not found."
+    
+def phone_number(args, contacts):
+    if args[0] in contacts: # Check if the contact exists
+        return contacts[args[0]]
+    else:
+        return "Contact not found."
+
+def print_all(contacts):
+    if len(contacts) == 0: # Check if there are any contacts
+        return "No contacts found."
+    else:
+        result = "Contacts: \n"
+        for name, phone in contacts.items(): # Print all contacts
+            result += f"{name}: {phone}\n"
+        return result
+    
 
 def main():
     contacts = {}
@@ -23,22 +39,20 @@ def main():
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
-        if command in ["close", "exit"]:
+        if command in ["close", "exit"]: # Exit the program
             print("Good bye!")
             break
-        elif command == "hello":
+        elif command == "hello": # Greet the user
             print("How can I help you?")
-        elif command == "add":
+        elif command == "add": # Add a contact
             print(add_contact(args, contacts))
-        elif command == "change":
+        elif command == "change": # Change a contact
             print(change_contact(args, contacts))
         elif command == "phone": # Print the phone number of a contact
-            print(contacts.get(args[0]))
-        elif command == "all":
-            print("Contacts:")
-            for name, phone in contacts.items(): # Print all contacts
-                print(f"{name}: {phone}")
-        else:
+            print(phone_number(args, contacts))
+        elif command == "all": # Print all contacts
+            print(print_all(contacts))  
+        else: # Invalid command
             print("Invalid command.")
 
 if __name__ == "__main__":
